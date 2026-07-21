@@ -59,15 +59,16 @@ export const styles = css`
             height: 100%;
             width: 100%;
             grid-template-areas:
-                "icon top-spacer top-spacer"
-                "icon title line"
-                "icon subtitle subtitle";
+                "top-spacer top-spacer"
+                "icon line"
+                "title title"
+                "subtitle subtitle";
             grid-template-columns:
                 ${controlHeight} ${'' /* Icon width */}
-                min-content ${'' /* Show the full title and subtitle */}
                 1fr; ${'' /* Line is only fr unit so fills remaining space */}
             grid-template-rows:
                 ${smallPadding}
+                ${controlHeight} ${'' /* Icon row */}
                 ${controlSlimHeight}
                 min-content;
             column-gap: 4px;
@@ -95,14 +96,15 @@ export const styles = css`
 
         .container.last .control {
             grid-template-areas:
-                "icon top-spacer"
-                "icon title"
-                "icon subtitle";
+                "top-spacer"
+                "icon"
+                "title"
+                "subtitle";
             grid-template-columns:
-                ${controlHeight}
                 min-content;
             grid-template-rows:
                 ${smallPadding}
+                ${controlHeight}
                 ${controlSlimHeight}
                 min-content;
         }
@@ -312,6 +314,12 @@ export const styles = css`
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+
+        ${'' /* The title now sets the step width, so it carries the gutter that separates one step from the next. */}
+        .container:not(.vertical) .title,
+        .container:not(.vertical) .subtitle {
+            padding-right: ${standardPadding};
         }
 
         [part='start'] {
