@@ -73,7 +73,10 @@
     }
   },
   "devDependencies": {
+    "@argos-ci/playwright": "^7.3.6",
+    "@playwright/test": "^1.60.0",
     "beachball": "2.64.0",
+    "http-server": "^14.1.1",
     "patch-package": "^8.0.0",
     "playwright": "1.60.0",
     "turbo": "^2.9.7"

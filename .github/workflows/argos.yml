@@ -1,0 +1,46 @@
+name: 'argos'
+
+on:
+  pull_request:
+  push:
+    branches:
+      - 'main'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref_name }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  # Argos authenticates through GitHub's OIDC provider, so this workflow needs
+  # no project token of its own.
+  id-token: write
+
+jobs:
+  argos:
+    name: Visual tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # Argos resolves the base build by walking the commit history.
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      # `postinstall` already runs `playwright install --with-deps`, so the
+      # browser is in place once this step finishes.
+      - run: npm ci
+        timeout-minutes: 20
+
+      # Same Storybook build the Chromatic step publishes, so both tools look
+      # at the same bundle.
+      - run: npm run build-storybook
+
+      - name: Take screenshots
+        run: npx playwright test -c argos/playwright.config.ts

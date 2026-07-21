@@ -133,3 +133,6 @@ packages/nimble-blazor
 rollup.config-*.cjs
 
 .agents/
+# Argos visual test output
+screenshots/
+test-results/
