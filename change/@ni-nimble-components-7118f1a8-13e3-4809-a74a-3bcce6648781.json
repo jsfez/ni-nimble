@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Move the step indicator above the step label in horizontal steppers",
+  "packageName": "@ni/nimble-components",
+  "email": "jeremy@smooth-code.com",
+  "dependentChangeType": "patch"
+}
